@@ -19,6 +19,13 @@
             "request": "launch",
             "script": "${workspaceFolder}/python/install_python_dependencies.ps1",
             "args": []
+        },
+        {
+            "name": "Install Node Dependencies",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/node/install_node_dependencies.ps1",
+            "args": []
         }
     ]
 }
