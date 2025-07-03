@@ -236,20 +236,24 @@ function Get-OutdatedDependencies {
 .DESCRIPTION
     This script sets up a Python conda environment or virtual environment and installs all dependencies listed in the requirements.txt file.
 
+.PARAMETER EnvPath
+    The path to the environment (either venv or conda) to be created.
+
 .PARAMETER UseVenv
     If specified, the script will use venv to create and manage the environment. Otherwise, it will use conda.
 #>
 function Install-DependenciesScript {
     param (
+        [string]$EnvPath = (Join-Path -Path $PSScriptRoot -ChildPath ".."),
         [switch]$UseVenv
     )
 
-    Push-Location $PSScriptRoot/..
+    Push-Location $EnvPath
 
-    $venvPath = "$PSScriptRoot/../.venv"
-    $condaEnvPath = "$PSScriptRoot/../.conda"
-    $requirementsPath = "$PSScriptRoot/../BuildScripts/dependencies.txt"
-    $outdatedFilePath = "$PSScriptRoot/../BuildScripts/outdated_dependencies.json"
+    $venvPath = Join-Path -Path $EnvPath -ChildPath ".venv"
+    $condaEnvPath = Join-Path -Path $EnvPath -ChildPath ".conda"
+    $requirementsPath = Join-Path -Path $PSScriptRoot -ChildPath "dependencies.txt"
+    $outdatedFilePath = Join-Path -Path $PSScriptRoot -ChildPath "outdated_dependencies.json"
 
     Remove-Venv -VenvPath $venvPath
     Remove-CondaEnv -CondaEnvPath $condaEnvPath
